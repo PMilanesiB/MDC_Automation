@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true
+    },
+    "include": [
+      "./node_modules/cypress",
+      "cypress/**/*.js",
+       "tsconfig.js"    ]
+}

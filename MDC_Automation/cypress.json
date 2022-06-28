@@ -1,0 +1,44 @@
+{
+    "$schema": "https://on.cypress.io/cypress.schema.json",
+    "testFiles": "**/*.{feature,features}",
+    "integrationFolder": "cypress/integration/features",
+    "projectId": "dz4a1w",
+    "baseUrl": "http://172.16.17.244:4500/mdc/dashboard",
+    "defaultCommandTimeout": 15000,
+    "responseTimeout": 150000,
+    "screenshotsFolder": "./cypress/snapshots/actual",
+    "trashAssetsBeforeRuns": true,
+    "ignoreTestFiles": [
+        "**/__snapshots__/*",
+        "**/__image_snapshots__/*"
+    ],
+    "env": {
+        "cypress-plugin-snapshots": {
+            "imageConfig": {
+                "threshold": 0.01
+            }
+        }
+    },
+    "db": {
+        "userName": "sa",
+        "password": "Abcd1234",
+        "server": "172.16.17.244",
+        "port": "14444",
+        "options": {
+            "database": "OPT_MDC",
+            "encrypt": true,
+            "rowCollectionOnRequestCompletion" : true
+        }
+    },
+    "db1": {
+        "userName": "sa",
+        "password": "Abcd1234",
+        "server": "172.16.10.109",
+        "port": "14444",
+        "options": {
+            "database": "OPT_MDC",
+            "encrypt": true,
+            "rowCollectionOnRequestCompletion" : true
+        }
+    }
+}

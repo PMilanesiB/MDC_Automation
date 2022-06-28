@@ -1,0 +1,226 @@
+Feature: MDC Create Components
+
+  I want create the elements for run tasks
+
+  @focus
+
+  Scenario Outline: Create Queue
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Comunicación - Motor MDC" of the menu
+    And I go to the subNode "Colas" of the menu
+    And I validate that not exist in the "Queues" database the value "<Name>" for the "name" field
+    And I press on New button
+    And I type "<Name>" in the elemental field "Nombre"
+    And I type "descript" in the field "Descripción"
+    And I select "TCP/IP" in the field "Tipo de Puerto"
+    And I press on Save button Queque
+    Then I see the menssage that indicate the correctly save
+    Then I verify that in the "Queues" database there is a record with the value "<Name>" for the "name" field
+
+    Examples:
+      | username | password | Name          |
+      | admin    | admin    | queueExample1 |
+
+
+  Scenario Outline: Create Brands
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Drivers" of the menu
+    And I go to the subNodeChild "Marcas" of the menu
+    And I validate that not exist in the "Brands" database the value "<Name>" for the "name" field
+    And I press on New button
+    And I type "<Name>" in the field "Nombre"
+    And I type "descript" in the field "Observación"
+    And I press on Save Brand
+    Then I see the menssage that indicate the correctly save
+    Then I verify that in the "Brands" database there is a record with the value "<Name>" for the "name" field
+
+    Examples:
+      | username | password | Name           |
+      | admin    | admin    | brandsExample1 |
+
+
+  Scenario Outline: Create Models
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Drivers" of the menu
+    And I go to the subNodeChild "Modelos" of the menu
+    And I validate that not exist in the "Models" database the value "<Name>" for the "name" field
+    And I create db relation in the Brands database the value "brandsExample1" for the Name field
+    And I press on New button
+    And I select "brandsExample1" in the field "Marca"
+    And I type "<Name>" in the field "Nombre"
+    And I type "descript" in the field "Observación"
+    And I press on Save Brand
+    Then I see the menssage that indicate the correctly save
+    Then I verify that in the "Models" database there is a record with the value "<Name>" for the "Name" field
+
+    Examples:
+      | username | password | Name          |
+      | admin    | admin    | modelExample1 |
+
+
+
+  Scenario Outline: Create Driver
+    Given I take token whit my "<username>" and my "<password>"
+    And I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Drivers" of the menu
+    And I go to the subNodeChild "Drivers" of the menu
+    And I validate that not exist in the "Drivers" database the value "<code>" for the "code" field
+    And I create db relation in the Brands database the value "marcaNoTocar" for the Name field
+    And I create db relation in the Models database the value "modeloNoTocarFinal" for the Name field
+    And I press on New button
+    And I type "<code>" in the field "Código"
+    And I type "<Name>" in the field "Nombre"
+    And I type "1" in the field "Versión"
+    And I type "componente-" in the field "Componente"
+    And I press on the Save&Continue
+    And I go to "Modelos" tab
+    And I press on Asociar button
+    And In the drivers modal I select "modeloNoTocarFinal" in the field "Modelo"
+    And I press on Save button modal Asociar
+    And I press on Save Brand
+    Then I see the menssage that indicate the correctly save
+    Then I verify that in the "Drivers" database there is a record with the value "<code>" for the "code" field
+    Then I filter by "<code>" for "Código"
+    And I activate the driver
+
+
+    Examples:
+      | username | password | code       | Name           |
+      | admin    | admin    | codeDriver | driverExample1 |
+
+  Scenario Outline: Create Devices
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Drivers" of the menu
+    And I go to the subNodeChild "Dispositivos" of the menu
+    And I validate that not exist in the "Devices" database the value "<code>" for the "Code" field
+    And I press on New button
+    And I type "<code>" in the field "Código"
+    And I type "<Name>" in the field "Nombre"
+    And I select "Medidor" in the field "Tipo de dispositivo"
+    And I select "modeloNoTocarFinal" in the field "Modelo"
+    And I type "1" in the field "Observaciones"
+    And I select "ab6" in the field "Dispositivo maestro"
+    And I press on the Save&Continue
+    And I press on add
+    And In the modal I select "driverExample1" in the field "Driver"
+    And In the devices modal I select the queue "colaNoTocar"
+    And I press on Save button modal Commands
+    And I go to Configuración
+    And I enter the default value "172.25.1.28" in the field "remote_ip"
+    And I enter the default value "0.0.0.0" in the field "local_ip"
+    And I press on Next button
+    And I press on Next button
+    And I press on Next button
+    And I press on the Save button
+    Then I verify that in the "Devices" database there is a record with the value "<code>" for the "Code" field
+    And I activate the device driver
+    And I press on Aceptar button of modal
+    And I press on Aceptar button of modal
+    And I go to the subNode "Dispositivos" of the menu
+    And I press on the Filtros button
+    And I type "<code>" in the field "Código"
+    And I press on Search button
+    And I activate the device driver
+
+
+    Examples:
+      | username | password | code      | Name           |
+      | admin    | admin    | finalcode | deviceExample1 |
+
+
+  Scenario Outline: Create Agents
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Comunicación - Motor MDC" of the menu
+    And I go to the subNodeChild "Agentes" of the menu
+    And I validate that not exist in the "Agents" database the value "<Name>" for the "Name" field
+    And I press on New button
+    And I type "<Name>" in the field "Nombre"
+    And I type "descripción" in the field "Descripción"
+    And I select "32 bits" in the field "64 bits"
+    And I press on the Save&Continue
+    And I go to "Puertos" tab
+    And I press on add
+    And I select "TCP/IP" in the field "Tipo de Puerto"
+    And I select "colaNoTocar" in the field "Ninguno"
+    And I press on the Save button devices
+    Then I see the menssage that indicate the correctly save
+    And I go to "Windows" tab
+    And I press on Generar script instalación
+    And I press on Aceptar button of modal
+    And I press on the Save&Continue
+    And I press on Copiar
+    And I press on Save Brand
+    Then I filter by "<Name>" for "Nombre"
+    And I check that the agent "<Name>" be active
+
+    Examples:
+      | username | password | Name         |
+      | admin    | admin    | finalAgente1 |
+
+
+   Scenario Outline: Create Task
+
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Herramientas y servicios" of the menu
+    And I go to the subNode "Monitoreo" of the menu
+    And I go to the subNodeChild "Tareas dispositivos" of the menu
+    And I press on New button
+    And In the devices task modal I select "Medidor" in the field "Tipo de dispositivo"
+    And In the devices task modal I select "Instantánea" in the field "Tipo de tarea"
+    And In the devices task modal I type "<desc>" in the field "Descripción"
+    And I press on Next button of the modal
+    And In the devices commands modal I select "LeerRegistros (read_registers)" in the field "Comandos"
+    And I press on Next button1 of the modal
+    And I press on Next button2 of the modal
+    And I press on the devices checkbox of the modal
+    And In the filter modal I type "modeloNoTocarFinal" in the field "Modelos"
+    And I press on Search button devices
+    And I press on the assign button
+    And I press on the save task button
+    And I press on the Filtros button
+    And I type "<desc>" in the field "Descripción"
+    And I press on Search button
+    And I search the code of the task
+    And I activate the device driver
+    And I press on Aceptar button of modal
+    And I press on play button
+    And I press on Aceptar button of modal
+    Then I see the menssage that indicate the task was executed correctly
+    And I go to the subNodeChild "Solicitudes dispositivos" of the menu
+    And I press on the Filtros button
+    And I search the code of the task
+    And I search the device task
+    And I press on Search button
+    And I check the device task is Proceced ok
+
+
+    Examples:
+      | username | password | desc             |
+      | admin    | admin    | descriptionFinal1 |
+
+  Scenario Outline: Delet Agents
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Comunicación - Motor MDC" of the menu
+    And I go to the subNodeChild "Agentes" of the menu
+    And I filter by "finalAgente1" for "Nombre"
+    And I desactivate the agent
+    And I press on Aceptar button of modal
+    And I press on Copiar and run Script and Delete Manager Service
+
+        Examples:
+      | username | password | desc             |
+      | admin    | admin    | descriptionFinal1 |
