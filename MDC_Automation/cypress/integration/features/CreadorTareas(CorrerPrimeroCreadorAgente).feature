@@ -44,3 +44,19 @@ Feature: MDC Create Components
         Examples:
             | username | password | desc              |
             | admin    | admin    | descriptionFinal1 |
+
+
+  Scenario Outline: Delet Agents
+    Given I take token whit my "<username>" and my "<password>"
+    When I open MDC page on Chrome Browser
+    And I go to the Node "Sistema" of the menu
+    And I go to the subNode "Comunicación - Motor MDC" of the menu
+    And I go to the subNodeChild "Agentes" of the menu
+    And I filter by "finalAgente1" for "Nombre"
+    And I desactivate the agent
+    And I press on Aceptar button of modal
+    And I press on Copiar and run Script and Delete Manager Service
+
+        Examples:
+      | username | password | desc             |
+      | admin    | admin    | descriptionFinal1 |
