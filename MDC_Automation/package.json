@@ -8,7 +8,7 @@
     "cy:open": "npx cypress open",
     "cy:run": "npx cypress run --record --key d48b24ee-1160-4e63-a6f7-41ac5a8f9af9"
   },
-  "author": "Nicolás Rioseco",
+  "author": "Pedro Milanesi",
   "license": "ISC",
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
